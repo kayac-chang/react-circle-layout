@@ -44,7 +44,7 @@ export function Radian({
   children,
   style,
   className,
-}: RadianProps): ReactNode {
+}: RadianProps): JSX.Element {
   const { radius } = useLayoutContext();
 
   return (
@@ -71,7 +71,7 @@ export function CircleLayout({
   children,
   style,
   className,
-}: CircleLayoutProps): ReactNode {
+}: CircleLayoutProps): JSX.Element {
   const center: CSSProperties = {
     position: `absolute`,
     top: `50%`,
