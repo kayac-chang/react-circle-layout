@@ -6,7 +6,7 @@ import React, {
   createContext,
 } from "react";
 
-function transform(rad: number, radius: number) {
+function transform(rad: number, radius: number): string {
   const { sin, cos } = Math;
 
   return [
@@ -15,9 +15,13 @@ function transform(rad: number, radius: number) {
   ].join(" ");
 }
 
-const LayoutContext = createContext({ radius: 0 });
+type LayoutContext = {
+  radius: number;
+};
 
-function useLayoutContext() {
+const LayoutContext = createContext<LayoutContext>({ radius: 0 });
+
+function useLayoutContext(): LayoutContext {
   const context = useContext(LayoutContext);
 
   if (!context) {
@@ -32,13 +36,22 @@ function useLayoutContext() {
 type RadianProps = {
   radian: number;
   children: ReactNode;
+  style?: CSSProperties;
+  className?: string;
 };
-export function Radian({ radian, children }: RadianProps) {
+export function Radian({
+  radian,
+  children,
+  style,
+  className,
+}: RadianProps): ReactNode {
   const { radius } = useLayoutContext();
 
   return (
     <div
+      className={className}
       style={{
+        ...style,
         transform: transform(radian, radius),
       }}
     >
@@ -51,12 +64,14 @@ interface CircleLayoutProps {
   radius: number;
   children: ReactNode | ReactNode[];
   style?: CSSProperties;
+  className?: string;
 }
 export function CircleLayout({
   radius = 0,
   children,
   style,
-}: CircleLayoutProps) {
+  className,
+}: CircleLayoutProps): ReactNode {
   const center: CSSProperties = {
     position: `absolute`,
     top: `50%`,
@@ -65,6 +80,7 @@ export function CircleLayout({
 
   return (
     <div
+      className={className}
       style={{
         ...style,
         position: "relative",

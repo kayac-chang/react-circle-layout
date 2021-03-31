@@ -1,7 +1,13 @@
-import { ExampleComponent } from '.'
+import { CircleLayout, Radian } from ".";
 
-describe('ExampleComponent', () => {
-  it('is truthy', () => {
-    expect(ExampleComponent).toBeTruthy()
-  })
-})
+describe("CircleLayout", () => {
+  it("is truthy", () => {
+    expect(CircleLayout).toBeTruthy();
+  });
+});
+
+describe("Radian", () => {
+  it("is truthy", () => {
+    expect(Radian).toBeTruthy();
+  });
+});
