@@ -4,7 +4,7 @@ import React, {
   Children,
   useContext,
   createContext,
-  RefObject,
+  forwardRef,
 } from "react";
 
 function transform(rad: number, radius: number): string {
@@ -66,39 +66,34 @@ interface CircleLayoutProps {
   children: ReactNode | ReactNode[];
   style?: CSSProperties;
   className?: string;
-  ref?: RefObject<HTMLDivElement>;
 }
-export function CircleLayout({
-  radius = 0,
-  children,
-  style,
-  className,
-  ref,
-}: CircleLayoutProps): JSX.Element {
-  const center: CSSProperties = {
-    position: `absolute`,
-    top: `50%`,
-    left: `50%`,
-  };
+export const CircleLayout = forwardRef<HTMLDivElement, CircleLayoutProps>(
+  ({ radius = 0, children, style, className }, ref): JSX.Element => {
+    const center: CSSProperties = {
+      position: `absolute`,
+      top: `50%`,
+      left: `50%`,
+    };
 
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        position: "relative",
-        width: `${radius * 2}rem`,
-        height: `${radius * 2}rem`,
-      }}
-      ref={ref}
-    >
-      <LayoutContext.Provider value={{ radius }}>
-        {Children.map(children, (el, index) => (
-          <div style={center} key={index}>
-            {el}
-          </div>
-        ))}
-      </LayoutContext.Provider>
-    </div>
-  );
-}
+    return (
+      <div
+        className={className}
+        style={{
+          ...style,
+          position: "relative",
+          width: `${radius * 2}rem`,
+          height: `${radius * 2}rem`,
+        }}
+        ref={ref}
+      >
+        <LayoutContext.Provider value={{ radius }}>
+          {Children.map(children, (el, index) => (
+            <div style={center} key={index}>
+              {el}
+            </div>
+          ))}
+        </LayoutContext.Provider>
+      </div>
+    );
+  }
+);
