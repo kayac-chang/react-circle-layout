@@ -4,6 +4,7 @@ import React, {
   Children,
   useContext,
   createContext,
+  RefObject,
 } from "react";
 
 function transform(rad: number, radius: number): string {
@@ -65,12 +66,14 @@ interface CircleLayoutProps {
   children: ReactNode | ReactNode[];
   style?: CSSProperties;
   className?: string;
+  ref?: RefObject<HTMLDivElement>;
 }
 export function CircleLayout({
   radius = 0,
   children,
   style,
   className,
+  ref,
 }: CircleLayoutProps): JSX.Element {
   const center: CSSProperties = {
     position: `absolute`,
@@ -87,6 +90,7 @@ export function CircleLayout({
         width: `${radius * 2}rem`,
         height: `${radius * 2}rem`,
       }}
+      ref={ref}
     >
       <LayoutContext.Provider value={{ radius }}>
         {Children.map(children, (el, index) => (
